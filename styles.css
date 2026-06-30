@@ -1,0 +1,154 @@
+/* Styles injectés dans la page arXiv HTML pour la traduction bilingue */
+
+.arxiv-translated-paragraph {
+  color: #3b82f6 !important; /* Soft scientific blue for translated text */
+  border-left: 3px solid #6366f1;
+  padding-left: 12px;
+  margin-top: 6px !important;
+  margin-bottom: 14px !important;
+  font-size: 0.98em;
+  line-height: 1.6;
+  font-style: normal;
+  display: block;
+  transition: all 0.3s ease;
+}
+
+/* En mode sombre sur le site arXiv (s'il y en a un ou s'il est appliqué par une autre extension) */
+@media (prefers-color-scheme: dark) {
+  .arxiv-translated-paragraph {
+    color: #60a5fa !important;
+    border-left-color: #818cf8;
+  }
+}
+
+/* Style de l'indicateur de progression flottant */
+.arxiv-translate-indicator {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f8fafc;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  transform: translateY(100px);
+  opacity: 0;
+}
+
+.arxiv-translate-indicator.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.arxiv-translate-indicator .spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #6366f1;
+  border-radius: 50%;
+  animation: arxiv-spin 0.8s linear infinite;
+}
+
+.arxiv-translate-indicator .success-icon {
+  color: #10b981;
+  font-weight: bold;
+}
+
+@keyframes arxiv-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --- OPTION : MASQUER LE TEXTE ORIGINAL --- */
+
+/* Masquer les éléments originaux quand le mode "Traduction seule" est actif */
+body.arxiv-hide-original p:not(.arxiv-translated-paragraph),
+body.arxiv-hide-original li:not(.arxiv-translated-paragraph),
+body.arxiv-hide-original figcaption:not(.arxiv-translated-paragraph),
+body.arxiv-hide-original h1:not(.arxiv-translated-paragraph):not(.ltx_title_document),
+body.arxiv-hide-original h2:not(.arxiv-translated-paragraph),
+body.arxiv-hide-original h3:not(.arxiv-translated-paragraph),
+body.arxiv-hide-original h4:not(.arxiv-translated-paragraph),
+body.arxiv-hide-original h5:not(.arxiv-translated-paragraph),
+body.arxiv-hide-original h6:not(.arxiv-translated-paragraph) {
+  display: none !important;
+}
+
+/* Rétablir le style de document natif pour le texte traduit en mode "Traduction seule" */
+body.arxiv-hide-original .arxiv-translated-paragraph {
+  color: inherit !important;
+  border-left: none !important;
+  padding-left: 0 !important;
+  margin-top: inherit !important;
+  margin-bottom: inherit !important;
+  font-size: inherit !important;
+}
+
+/* --- STYLES D'IMPRESSION PDF STYLE LATEX --- */
+
+@media print {
+  /* Masquer tous les éléments web interactifs et menus d'arXiv */
+  #arxiv-translate-status,
+  .arxiv-translate-indicator,
+  .ltx_page_navbar,
+  nav,
+  .ltx_page_header,
+  .ltx_page_footer,
+  header,
+  footer {
+    display: none !important;
+  }
+
+  /* Forcer le texte traduit en noir normal s'il est imprimé en mode bilingue */
+  .arxiv-translated-paragraph {
+    color: #111827 !important;
+    border-left-color: #9ca3af !important;
+  }
+
+  /* Rétablir le style propre si imprimé en mode Traduction seule */
+  body.arxiv-hide-original .arxiv-translated-paragraph {
+    color: black !important;
+    border-left: none !important;
+    padding-left: 0 !important;
+  }
+
+  /* Marges et mise en page de type document LaTeX A4 */
+  @page {
+    size: A4;
+    margin: 2.5cm 2cm;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+    font-family: "Nimbus Roman", "Times New Roman", Times, "Computer Modern Serif", serif !important;
+    font-size: 10.5pt !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Gestion des sauts de page pour éviter les coupures disgracieuses */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  table, 
+  figure, 
+  img, 
+  .ltx_Math, 
+  .MathJax, 
+  math {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+}

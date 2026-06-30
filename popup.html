@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>arXiv Translate Settings</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+    :root {
+      --bg-dark: #0f172a;
+      --bg-card: #1e293b;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --accent: #38bdf8;
+      --success: #10b981;
+      --border: #334155;
+    }
+
+    body {
+      width: 320px;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .logo-container {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+
+    .logo-container svg {
+      width: 20px;
+      height: 20px;
+      fill: white;
+    }
+
+    header h1 {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0;
+      background: linear-gradient(to right, #ffffff, #cbd5e1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header p {
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin: 2px 0 0 0;
+    }
+
+    .card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    input[type="password"], input[type="text"], select {
+      width: 100%;
+      box-sizing: border-box;
+      background-color: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      color: var(--text-primary);
+      font-size: 13px;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+
+    input[type="password"]:focus, input[type="text"]:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    }
+
+    .helper-link {
+      display: inline-block;
+      font-size: 11px;
+      color: var(--accent);
+      text-decoration: none;
+      margin-top: 6px;
+      transition: color 0.2s;
+    }
+
+    .helper-link:hover {
+      color: #7dd3fc;
+      text-decoration: underline;
+    }
+
+    .toggle-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Switch button style */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #475569;
+      transition: .3s;
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: var(--primary);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    .btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 10px rgba(99, 102, 241, 0.2);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      margin-top: 8px;
+      box-shadow: none;
+    }
+
+    .btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-color: var(--text-secondary);
+      box-shadow: none;
+    }
+
+    #status-msg {
+      font-size: 12px;
+      text-align: center;
+      margin-top: 10px;
+      min-height: 18px;
+      color: var(--success);
+      font-weight: 500;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    #status-msg.show {
+      opacity: 1;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 10px;
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo-container">
+        <!-- SVG Translation Icon -->
+        <svg viewBox="0 0 24 24">
+          <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
+        </svg>
+      </div>
+      <div>
+        <h1>arXiv Translate</h1>
+        <p>Traducteur d'articles scientifiques</p>
+      </div>
+    </header>
+
+    <div class="card">
+      <div class="form-group toggle-group" style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+        <div>
+          <label style="margin-bottom: 2px;">Traduction automatique</label>
+          <span style="font-size: 11px; color: var(--text-secondary);">Traduire au chargement</span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="auto-translate">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="form-group toggle-group" style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+        <div>
+          <label style="margin-bottom: 2px;">Redirection PDF automatique</label>
+          <span style="font-size: 11px; color: var(--text-secondary);">Ouvrir la version HTML de l'article</span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="auto-redirect">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="form-group toggle-group">
+        <div>
+          <label style="margin-bottom: 2px;">Masquer le texte d'origine</label>
+          <span style="font-size: 11px; color: var(--text-secondary);">Afficher uniquement le texte traduit</span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="hide-original">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="form-group" style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+        <label for="target-lang">Langue de destination</label>
+        <select id="target-lang">
+          <option value="fr">Français (French)</option>
+          <option value="es">Español (Spanish)</option>
+          <option value="de">Deutsch (German)</option>
+          <option value="zh">中文 (Chinese)</option>
+          <option value="it">Italiano (Italian)</option>
+          <option value="pt">Português (Portuguese)</option>
+          <option value="ja">日本語 (Japanese)</option>
+          <option value="ar">العربية (Arabic)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="translate-engine">Moteur de traduction</label>
+        <select id="translate-engine">
+          <option value="google">Google Translate (Gratuit)</option>
+          <option value="gemini">Google Gemini API (Clé requise)</option>
+          <option value="ollama">Ollama (IA Locale)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Configuration Gemini (Masquée par défaut) -->
+    <div class="card" id="card-gemini-config" style="display: none;">
+      <div class="form-group">
+        <label for="gemini-key">Clé API Gemini</label>
+        <div class="input-wrapper">
+          <input type="password" id="gemini-key" placeholder="AIzaSy...">
+        </div>
+        <a href="https://aistudio.google.com/" target="_blank" class="helper-link">Obtenir une clé API gratuite →</a>
+      </div>
+    </div>
+
+    <!-- Configuration Ollama (Masquée par défaut) -->
+    <div class="card" id="card-ollama-config" style="display: none;">
+      <div class="form-group">
+        <label for="ollama-model">Modèle Ollama local</label>
+        <div class="input-wrapper">
+          <input type="text" id="ollama-model" placeholder="gemma2:2b" value="gemma2:2b">
+        </div>
+        <span style="font-size: 11px; color: var(--text-secondary); display: block; margin-top: 6px;">
+          Assurez-vous qu'Ollama fonctionne sur <code style="color: var(--accent);">localhost:11434</code>.
+        </span>
+      </div>
+    </div>
+
+    <button id="btn-translate" class="btn">
+      Traduire cet article
+    </button>
+    
+    <button id="btn-export-pdf" class="btn btn-secondary" style="margin-top: 8px;">
+      Exporter en PDF (LaTeX)
+    </button>
+    
+    <button id="btn-html-version" class="btn btn-secondary" style="display: none; margin-top: 8px;">
+      Voir la version HTML (Traduisible)
+    </button>
+
+    <div id="status-msg">Paramètres sauvegardés ✓</div>
+
+    <div class="footer">
+      Version 1.0 • Sans serveur intermédiaire
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
