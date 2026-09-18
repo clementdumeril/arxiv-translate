@@ -1,62 +1,76 @@
-# arXiv Translate - Extension de Traduction Scientifique
+# arXiv Translate
 
-Une extension de navigateur moderne (Chrome Extension Manifest V3) conçue pour traduire automatiquement les articles de recherche d'**arXiv** tout en préservant l'intégrité absolue de la mise en page (balises HTML) et des formules mathématiques (LaTeX/MathJax). Elle permet également d'exporter le document traduit au format PDF académique type LaTeX.
+> A Manifest V3 Chrome extension that translates arXiv HTML papers paragraph by paragraph while
+> keeping LaTeX/MathJax equations and the page's HTML structure byte-for-byte intact — with three
+> interchangeable translation backends, one of them fully offline.
 
----
+*No screenshot below on purpose: the one previously used for this project turned out to be an
+AI-generated mockup with garbled text, not a real capture (see Limitations). Pulled rather than
+published here.*
 
-## Fonctionnalités
+## Problem
 
-- 🔄 **Traduction Bilingue & Unilingue** : Les paragraphes traduits s'insèrent directement sous les originaux. Vous pouvez choisir de **masquer le texte original anglais** à tout moment pour lire ou imprimer uniquement la version traduite.
-- 📐 **Protection Strict du Latex & du HTML (Mise en Forme)** : Notre moteur isole à la fois les équations complexes (KaTeX/MathJax) et les balises HTML de structure (liens de citations, gras, italique, etc.) avant de les envoyer au traducteur. Le texte original est ainsi reconstitué à l'identique après traduction.
-- 📄 **Export PDF Style LaTeX** : Un bouton d'exportation configure la page en masquant les menus web et en appliquant une feuille de style d'impression académique (`@media print` avec police Serif de type Times, marges standardisées et gestion intelligente des sauts de page pour les équations/figures) afin d'enregistrer l'article traduit en un PDF parfait.
-- 🔌 **3 Moteurs de Traduction Disponibles** :
-  1. **Google Translate (Gratuit)** : Sélectionné par défaut. Ne nécessite **aucune clé API** et traduit instantanément.
-  2. **Ollama (IA Locale)** : Utilise une intelligence artificielle qui tourne directement en local sur votre machine. 100% privé, gratuit et hors ligne.
-  3. **Google Gemini API** : Traduction cloud via `gemini-1.5-flash` en utilisant votre clé API gratuite.
-- ⚡ **Redirection PDF automatique** : Intercepte les pages PDF d'arXiv pour vous proposer ou forcer la redirection vers la version HTML native d'arXiv, propice à la traduction directe.
+A naive translator that runs over an arXiv paper's HTML breaks it: LaTeX/MathJax equations get
+mangled mid-markup, citation links and formatting tags get lost, and the page structure doesn't
+survive the round trip. Reading papers in a non-native language shouldn't mean losing the equations.
 
----
+## Approach
 
-## Structure du Projet
+- **Double tokenization** (`content.js`): HTML tags and LaTeX/MathJax spans are masked before the
+  text is sent to translation, then restored identically afterward — the equation a reader sees is
+  the exact one arXiv rendered, not a re-parsed approximation.
+- **Three interchangeable backends** (`background.js`, picked in the popup): Google Translate
+  (free, keyless), Gemini API (cloud, brings your own key), and Ollama (fully local — offline,
+  private, no key).
+- **Bounded concurrency**: translates 4 paragraphs at a time (`CONCURRENCY = 4`), not the whole
+  page at once and not one paragraph at a time.
+- **Bilingual or translated-only display**, toggled live from the popup.
+- **Academic PDF export**: a dedicated print stylesheet (`@media print`, serif type, standardised
+  margins, page breaks kept clear of equations and figures) turns the translated page into a clean
+  PDF via the browser's own print dialog.
+- **arXiv PDF → HTML redirect**: intercepts arXiv PDF URLs and offers the native HTML version,
+  since that's what the translator can actually work with.
 
-- `manifest.json` : Déclare la configuration de l'extension (MV3) et les autorisations réseaux nécessaires (API Google Gemini, Ollama sur localhost, arXiv).
-- `popup.html` & `popup.js` : Interface de configuration sombre permettant de choisir la langue de destination, le moteur de traduction, de basculer l'affichage (bilingue/unilingue) et d'exporter en PDF.
-- `background.js` : Centralise les appels vers les API de traduction (pour éviter les blocages de CORS) et gère la redirection des URLs PDF.
-- `content.js` : Effectue la double tokenisation (protection des balises et du LaTeX), orchestre la file d'attente de traduction concurrente (4 paragraphes à la fois), gère l'affichage dynamique et déclenche l'impression.
-- `styles.css` : Feuille de style injectée pour formater le texte traduit, masquer le texte d'origine sur demande et configurer la feuille d'impression PDF de type LaTeX.
+## What's real
 
----
+A working Manifest V3 extension (`manifest.json`, `background.js`, `content.js`, `popup.*`,
+`styles.css`), a full icon set, and a `PRIVACY_POLICY.md` — the extension calls only the
+translation backend you pick, and Ollama's is entirely local. Not yet published on the Chrome Web
+Store; installing today means loading it unpacked (below).
 
-## Installation Locale (Mode Développeur)
+## Limitations
 
-Pour installer l'extension sur Google Chrome, Brave, Edge ou Opera :
+- The free Google Translate backend rate-limits under heavy use; Gemini needs your own API key;
+  Ollama needs a local install and a running model.
+- Complex nested LaTeX (multi-line aligned environments, custom macros) is not exhaustively tested
+  against the tokenizer.
+- Only arXiv pages that have a native HTML version are supported — older, PDF-only listings aren't.
+- No before/after screenshot yet. The image used for this project elsewhere turned out, on a closer
+  look while writing this README, to be an AI-generated store-style mockup (fabricated author
+  names, garbled body text) rather than a real capture of the extension — so it's been removed
+  rather than kept. A genuine screenshot is the next thing to add here, not a cleanup detail.
 
-1. Téléchargez ou clonez ce dossier sur votre ordinateur.
-2. Ouvrez votre navigateur et accédez à `chrome://extensions/`.
-3. Activez le **Mode développeur** (en haut à droite).
-4. Cliquez sur **Charger l'extension non empaquetée** (Load unpacked) en haut à gauche.
-5. Sélectionnez le dossier du projet.
-6. L'extension est prête ! Vous pouvez l'épingler dans votre barre d'outils.
+## Install (developer mode)
 
----
+1. Clone or download this repository.
+2. Open `chrome://extensions/` (also works in Brave, Edge, Opera).
+3. Enable **Developer mode** (top right).
+4. **Load unpacked** → select this folder.
+5. Pin the extension and open any `arxiv.org` HTML paper.
 
-## Utilisation des Options d'Export PDF
+## Try it
 
-1. Saisissez votre mode de traduction ou laissez par défaut **Google Translate**.
-2. Sur la page d'un article HTML, lancez la traduction.
-3. Une fois la traduction terminée, ouvrez la popup de l'extension et cochez **Masquer le texte d'origine** (le document réorganise instantanément l'affichage pour masquer l'anglais et adapter le style).
-4. Cliquez sur **Exporter en PDF (LaTeX)**.
-5. La boîte de dialogue d'impression de votre navigateur s'ouvre. Sélectionnez **Enregistrer au format PDF** comme destination.
-6. Le PDF généré respecte les polices Serif, les marges standardisées et applique des sauts de page intelligents pour éviter de tronquer les formules et figures !
+On an arXiv HTML page: open the popup, pick a translation engine and target language, run the
+translation, then toggle **Hide original text** to read the translated version alone, or
+**Export to PDF** to print it with the academic stylesheet.
 
----
+## Project layout
 
-## Publication sur le Chrome Web Store
-
-1. Compressez tout le dossier de l'extension dans un fichier `.zip`.
-2. Connectez-vous sur la [Chrome Developer Console](https://chrome.google.com/webstore/devconsole).
-3. Créez un compte développeur (frais uniques de $5 USD payés à Google).
-4. Cliquez sur **Ajouter un nouvel article** (Add new item) et importez votre fichier `.zip`.
-5. Remplissez la fiche produit (titre, description, icônes 128x128 px, captures d'écran).
-6. Dans l'onglet **Pratiques de confidentialité** (Privacy practices), indiquez que l'extension ne collecte aucune donnée utilisateur sur des serveurs distants puisque les appels se font en direct.
-7. Soumettez pour examen. La validation MV3 est généralement validée en 24h à 72h.
+```
+manifest.json      Manifest V3 config and permissions (Gemini API, Ollama localhost, arXiv)
+background.js      Translation API calls (works around CORS) + PDF-URL redirect
+content.js          Double tokenization, translation queue, DOM injection
+popup.html/js       Engine + language + display settings
+styles.css           Injected styles for the translated layout and the print stylesheet
+PRIVACY_POLICY.md    What the extension does and does not send anywhere
+```
