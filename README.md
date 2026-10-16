@@ -1,54 +1,36 @@
 # arXiv Translate
 
-> A Manifest V3 Chrome extension that translates arXiv HTML papers paragraph by paragraph while
-> keeping LaTeX/MathJax equations and the page's HTML structure byte-for-byte intact — with three
-> interchangeable translation backends, one of them fully offline.
+A Manifest V3 Chrome extension that translates arXiv HTML papers paragraph by paragraph while keeping the LaTeX/MathJax equations and the page's HTML structure intact. It has three interchangeable translation backends, one of which runs fully offline.
 
-*No screenshot below on purpose: the one previously used for this project turned out to be an
-AI-generated mockup with garbled text, not a real capture (see Limitations). Pulled rather than
-published here.*
+There is no screenshot here on purpose; see Limitations.
 
-## Problem
+## Why
 
-A naive translator that runs over an arXiv paper's HTML breaks it: LaTeX/MathJax equations get
-mangled mid-markup, citation links and formatting tags get lost, and the page structure doesn't
-survive the round trip. Reading papers in a non-native language shouldn't mean losing the equations.
+A general-purpose translator run over an arXiv paper's HTML breaks it: equations get mangled mid-markup, citation links and formatting tags are lost, and the page structure doesn't survive the round trip. Reading a paper in another language shouldn't cost you the equations.
 
-## Approach
+## How it works
 
-- **Double tokenization** (`content.js`): HTML tags and LaTeX/MathJax spans are masked before the
-  text is sent to translation, then restored identically afterward — the equation a reader sees is
-  the exact one arXiv rendered, not a re-parsed approximation.
-- **Three interchangeable backends** (`background.js`, picked in the popup): Google Translate
-  (free, keyless), Gemini API (cloud, brings your own key), and Ollama (fully local — offline,
-  private, no key).
-- **Bounded concurrency**: translates 4 paragraphs at a time (`CONCURRENCY = 4`), not the whole
-  page at once and not one paragraph at a time.
-- **Bilingual or translated-only display**, toggled live from the popup.
-- **Academic PDF export**: a dedicated print stylesheet (`@media print`, serif type, standardised
-  margins, page breaks kept clear of equations and figures) turns the translated page into a clean
-  PDF via the browser's own print dialog.
-- **arXiv PDF → HTML redirect**: intercepts arXiv PDF URLs and offers the native HTML version,
-  since that's what the translator can actually work with.
+`content.js` does a double tokenization. Before any text goes to the translator, HTML tags and LaTeX/MathJax spans are masked; afterward they are restored identically. The equation you see is the one arXiv rendered, not a re-parsed approximation.
 
-## What's real
+`background.js` handles the translation calls (which also gets around CORS). You pick the backend in the popup:
+- Google Translate: free, no key;
+- Gemini API: cloud, with your own key;
+- Ollama: fully local, offline and private, no key.
 
-A working Manifest V3 extension (`manifest.json`, `background.js`, `content.js`, `popup.*`,
-`styles.css`), a full icon set, and a `PRIVACY_POLICY.md` — the extension calls only the
-translation backend you pick, and Ollama's is entirely local. Not yet published on the Chrome Web
-Store; installing today means loading it unpacked (below).
+Paragraphs are translated 4 at a time (`CONCURRENCY = 4`) rather than the whole page at once or one by one. From the popup you can switch live between a bilingual view and the translation alone.
+
+For PDF export there is a print stylesheet (`@media print`: serif type, standardized margins, page breaks kept away from equations and figures), so the browser's own print dialog turns the translated page into a clean PDF. The extension also intercepts arXiv PDF URLs and offers the native HTML version instead, since that's the only format the translator can work with.
+
+## Status
+
+The extension works (`manifest.json`, `background.js`, `content.js`, `popup.*`, `styles.css`, a full icon set) and comes with a `PRIVACY_POLICY.md`: it only calls the translation backend you pick, and Ollama's is entirely local. It isn't on the Chrome Web Store yet, so for now you load it unpacked (below).
 
 ## Limitations
 
-- The free Google Translate backend rate-limits under heavy use; Gemini needs your own API key;
-  Ollama needs a local install and a running model.
-- Complex nested LaTeX (multi-line aligned environments, custom macros) is not exhaustively tested
-  against the tokenizer.
-- Only arXiv pages that have a native HTML version are supported — older, PDF-only listings aren't.
-- No before/after screenshot yet. The image used for this project elsewhere turned out, on a closer
-  look while writing this README, to be an AI-generated store-style mockup (fabricated author
-  names, garbled body text) rather than a real capture of the extension — so it's been removed
-  rather than kept. A genuine screenshot is the next thing to add here, not a cleanup detail.
+- The free Google Translate backend rate-limits under heavy use. Gemini needs your own API key, and Ollama needs a local install with a running model.
+- I haven't tested the tokenizer exhaustively against complex nested LaTeX (multi-line aligned environments, custom macros).
+- Only arXiv papers that have a native HTML version are supported. Older, PDF-only listings aren't.
+- No before/after screenshot yet. The image used for this project elsewhere turned out, when I looked closely while writing this README, to be an AI-generated store-style mockup (fabricated author names, garbled body text) rather than a capture of the extension, so I removed it. A real screenshot is the next thing to add.
 
 ## Install (developer mode)
 
@@ -58,11 +40,9 @@ Store; installing today means loading it unpacked (below).
 4. **Load unpacked** → select this folder.
 5. Pin the extension and open any `arxiv.org` HTML paper.
 
-## Try it
+## Usage
 
-On an arXiv HTML page: open the popup, pick a translation engine and target language, run the
-translation, then toggle **Hide original text** to read the translated version alone, or
-**Export to PDF** to print it with the academic stylesheet.
+On an arXiv HTML page, open the popup, pick a translation engine and a target language, and run the translation. Then toggle **Hide original text** to read only the translation, or use **Export to PDF** to print it with the academic stylesheet.
 
 ## Project layout
 
