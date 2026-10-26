@@ -4,14 +4,14 @@ A Manifest V3 Chrome extension that translates arXiv HTML papers paragraph by pa
 
 ## How it works
 
-`content.js` masks HTML tags and LaTeX/MathJax spans before any text goes to the translator, then restores them identically. The equation you see is the one arXiv rendered.
+`content.js` masks HTML tags and LaTeX/MathJax spans before any text goes to the translator, then puts the original markup back. If the translator drops a placeholder, that equation is lost. The equation you see is the one arXiv rendered.
 
-`background.js` makes the translation calls (which also gets around CORS). You pick the backend in the popup:
+`background.js` makes the translation calls. You pick the backend in the popup:
 - Google Translate: free, no key;
-- Gemini API: your own key;
+- Gemini API: your own key (the model name is hard-coded in `background.js`);
 - Ollama: fully local, offline, no key.
 
-Paragraphs are translated 4 at a time. The popup switches between a bilingual view and the translation alone. A print stylesheet turns the translated page into a clean PDF through the browser's print dialog. arXiv PDF URLs are redirected to the HTML version.
+Paragraphs are translated 4 at a time. The popup switches between a bilingual view and the translation alone. A print stylesheet turns the translated page into a clean PDF through the browser's print dialog. On an arXiv PDF, the popup offers the HTML version; an option redirects automatically.
 
 ## Install (developer mode)
 
@@ -30,3 +30,7 @@ The extension only calls the backend you pick; see [PRIVACY_POLICY.md](PRIVACY_P
 - I haven't tested the tokenizer exhaustively on complex nested LaTeX (multi-line aligned environments, custom macros).
 - Only papers with a native arXiv HTML version work.
 - No screenshot yet. The image I used for this project elsewhere was a mockup, not a capture of the extension, so I removed it.
+
+## License
+
+MIT, see [LICENSE](LICENSE).

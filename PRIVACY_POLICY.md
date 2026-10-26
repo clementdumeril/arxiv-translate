@@ -34,4 +34,4 @@ L'extension n'utilise aucun cookie de suivi, aucun outil d'analyse (analytics) e
 
 ## 5. Contact
 Pour toute question concernant cette politique de confidentialité, vous pouvez ouvrir une issue sur le dépôt officiel du projet :
-[https://github.com/clementdumeril/Traduction_research/issues](https://github.com/clementdumeril/Traduction_research/issues)
+[https://github.com/clementdumeril/arxiv-translate/issues](https://github.com/clementdumeril/arxiv-translate/issues)
