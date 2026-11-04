@@ -1,37 +1,25 @@
-# Règles de confidentialité - arXiv Translate
+# Privacy policy: arXiv Translate
 
-Cette page décrit la politique de confidentialité de l'extension de navigateur **arXiv Translate**.
+This page describes the privacy policy of the arXiv Translate browser extension.
 
-Dernière mise à jour : 30 juin 2026.
+Last updated: 30 June 2026 (translated from the original French version on 3 November 2026, with no change in content).
 
----
+## 1. Data collection
+- No personal data is collected. The extension does not ask for, collect or store any information that identifies you (name, email address, account identifiers, etc.).
+- No intermediate server. The extension talks directly from your browser to the translation service you configured. No server run by the extension's author sees your data.
 
-## 1. Collecte de données et respect de la vie privée
-L'extension **arXiv Translate** est conçue pour respecter pleinement votre vie privée. 
-- **Aucune donnée personnelle n'est collectée** : L'extension ne demande, ne collecte et ne stocke aucune information permettant de vous identifier personnellement (nom, adresse e-mail, identifiants, etc.).
-- **Aucun serveur intermédiaire** : L'extension communique directement de votre navigateur vers les services de traduction configurés. Aucun serveur tiers géré par l'éditeur de l'extension n'intercepte vos données.
+## 2. Storage of your settings
+The settings chosen in the popup (target language, translation engine, local Ollama model name and Gemini API key) are stored on your device with the `chrome.storage.local` API. They stay in your browser and are never sent to the extension's author or to third parties.
 
----
+## 3. Data sent for translation
+To translate the paragraphs of an arXiv paper, the extension reads the text of the active HTML page and sends it to the engine you chose:
+- Google Translate (free): the text is sent to Google Translate's public endpoint.
+- Google Gemini API: the text is sent directly to the Google Gemini API with your personal API key.
+- Ollama (local model): requests go to your own machine (`http://localhost:11434`) and do not leave it.
 
-## 2. Stockage des paramètres de l'utilisateur
-Les paramètres configurés dans la popup de l'extension (choix de la langue cible, moteur de traduction sélectionné, nom du modèle local Ollama et clé API Gemini) sont stockés localement sur votre appareil à l'aide de l'API sécurisée `chrome.storage.local`. 
-Ces informations restent confidentielles sur votre navigateur et ne sont jamais transmises à l'éditeur de l'extension ou à des tiers.
-
----
-
-## 3. Transmission des données de traduction
-Pour traduire les paragraphes d'un article scientifique arXiv, l'extension lit le texte de la page HTML active et l'envoie au moteur de traduction que vous avez configuré :
-- **Google Translate (Gratuit)** : Les textes sont envoyés à l'API publique de Google Translate pour être traduits.
-- **Google Gemini API** : Les textes sont envoyés directement à l'API officielle Google Gemini en utilisant votre clé API personnelle.
-- **Ollama (IA Locale)** : Les requêtes sont envoyées en local sur votre machine (`http://localhost:11434`), garantissant une confidentialité absolue et hors ligne.
-
----
-
-## 4. Analyse et cookies
-L'extension n'utilise aucun cookie de suivi, aucun outil d'analyse (analytics) et aucun script publicitaire.
-
----
+## 4. Analytics and cookies
+The extension uses no tracking cookies, no analytics and no advertising scripts.
 
 ## 5. Contact
-Pour toute question concernant cette politique de confidentialité, vous pouvez ouvrir une issue sur le dépôt officiel du projet :
+For any question about this policy, open an issue on the project repository:
 [https://github.com/clementdumeril/arxiv-translate/issues](https://github.com/clementdumeril/arxiv-translate/issues)
