@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-03",
+  "command": "node tools/smoke_test.mjs --engine google --paper 2502.00581 --lang fr --out docs",
+  "browser": "Chrome/156.0.8078.47",
+  "headless": true,
+  "paper": "2502.00581",
+  "engine": "google",
+  "lang": "fr",
+  "seconds": 14,
+  "status": "Traduction terminée avec 86 erreurs.",
+  "translated": 6,
+  "translatedWithMath": 0,
+  "errors": {
+    "Failed to translate element: Error: Failed to fetch": 86
+  }
+}

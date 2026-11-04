@@ -1,0 +1,14 @@
+{
+  "name": "arxiv-translate",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Chrome extension that translates arXiv HTML papers and keeps the equations",
+  "type": "module",
+  "scripts": {
+    "smoke": "node tools/smoke_test.mjs"
+  },
+  "devDependencies": {
+    "puppeteer": "25.16.0"
+  },
+  "license": "MIT"
+}
