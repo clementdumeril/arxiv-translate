@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="540" viewBox="0 0 1200 540" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#444"/>
+    </marker>
+  </defs>
+  <rect x="0.75" y="0.75" width="1198.5" height="538.5" rx="16" fill="#FFFFFF" stroke="#D0D7DE" stroke-width="1.5"/>
+
+  <!-- zones -->
+  <rect x="24" y="32" width="592" height="336" rx="10" fill="none" stroke="#8A9AA8" stroke-width="1.2" stroke-dasharray="6 4"/>
+  <text x="40" y="56" font-size="15" fill="#5A6875" letter-spacing="1.5">IN THE PAGE, CONTENT.JS</text>
+  <rect x="640" y="32" width="536" height="336" rx="10" fill="none" stroke="#8A9AA8" stroke-width="1.2" stroke-dasharray="6 4"/>
+  <text x="656" y="56" font-size="15" fill="#5A6875" letter-spacing="1.5">SERVICE WORKER, BACKGROUND.JS</text>
+  <rect x="24" y="392" width="1152" height="124" rx="10" fill="none" stroke="#8A9AA8" stroke-width="1.2" stroke-dasharray="6 4"/>
+  <text x="40" y="416" font-size="15" fill="#5A6875" letter-spacing="1.5">ONE PARAGRAPH, MASKED AND RESTORED</text>
+
+  <!-- page side -->
+  <rect x="40" y="76" width="196" height="80" rx="10" fill="#FBE5CF" stroke="#C97A2B" stroke-width="1.5"/>
+  <text x="56" y="108" font-size="24" fill="#15202A">arXiv HTML</text>
+  <text x="56" y="134" font-size="16" fill="#5A6875">paragraphs + MathML</text>
+  <line x1="236" y1="116" x2="260" y2="116" stroke="#444" stroke-width="2" marker-end="url(#ah)"/>
+
+  <rect x="264" y="76" width="336" height="80" rx="10" fill="#E2EBFA" stroke="#1F5FBF" stroke-width="2"/>
+  <text x="432" y="108" font-size="22" fill="#15202A" text-anchor="middle">Mask math and tags</text>
+  <text x="432" y="134" font-size="16" fill="#5A6875" text-anchor="middle">4 paragraphs in parallel</text>
+
+  <rect x="264" y="252" width="336" height="80" rx="10" fill="#E2EBFA" stroke="#1F5FBF" stroke-width="2"/>
+  <text x="432" y="284" font-size="22" fill="#15202A" text-anchor="middle">Restore and insert</text>
+  <text x="432" y="310" font-size="16" fill="#5A6875" text-anchor="middle">under the original paragraph</text>
+
+  <rect x="40" y="176" width="90" height="176" rx="6" fill="#FFFFFF" stroke="#D0D7DE"/>
+  <image href="../popup.png" x="41" y="177" width="88" height="174"/>
+  <text x="142" y="200" font-size="16" fill="#15202A">popup</text>
+  <text x="142" y="222" font-size="16" fill="#5A6875">engine,</text>
+  <text x="142" y="242" font-size="16" fill="#5A6875">language,</text>
+  <text x="142" y="262" font-size="16" fill="#5A6875">toggles</text>
+
+  <text x="280" y="196" font-size="16" fill="#5A6875">paragraphs, headings, list items, captions;</text>
+  <text x="280" y="218" font-size="16" fill="#5A6875">bibliography, header and footer skipped</text>
+
+  <!-- page -> worker -->
+  <line x1="600" y1="116" x2="652" y2="116" stroke="#444" stroke-width="2" marker-end="url(#ah)"/>
+
+  <!-- worker -->
+  <rect x="656" y="76" width="176" height="80" rx="10" fill="#E2EBFA" stroke="#1F5FBF" stroke-width="1.5"/>
+  <text x="744" y="108" font-size="22" fill="#15202A" text-anchor="middle">Route</text>
+  <text x="744" y="134" font-size="16" fill="#5A6875" text-anchor="middle">to the chosen engine</text>
+
+  <rect x="880" y="76" width="280" height="72" rx="10" fill="#F1F4F6" stroke="#8A9AA8" stroke-width="1.5"/>
+  <text x="896" y="106" font-size="22" fill="#15202A">Google Translate</text>
+  <text x="896" y="132" font-size="16" fill="#5A6875">GET, keyless endpoint</text>
+  <rect x="880" y="164" width="280" height="72" rx="10" fill="#F1F4F6" stroke="#8A9AA8" stroke-width="1.5"/>
+  <text x="896" y="194" font-size="22" fill="#15202A">Gemini API</text>
+  <text x="896" y="220" font-size="16" fill="#5A6875">POST, your key, temperature 0.1</text>
+  <rect x="880" y="252" width="280" height="72" rx="10" fill="#F1F4F6" stroke="#8A9AA8" stroke-width="1.5"/>
+  <text x="896" y="282" font-size="22" fill="#15202A">Ollama, offline</text>
+  <text x="896" y="308" font-size="16" fill="#5A6875">localhost:11434, gemma2:2b</text>
+
+  <path d="M832,112 L876,112" fill="none" stroke="#444" stroke-width="2" marker-end="url(#ah)"/>
+  <path d="M832,124 L856,124 L856,200 L876,200" fill="none" stroke="#444" stroke-width="2" marker-end="url(#ah)"/>
+  <path d="M856,200 L856,288 L876,288" fill="none" stroke="#444" stroke-width="2" marker-end="url(#ah)"/>
+
+  <!-- return -->
+  <path d="M744,156 L744,292 L604,292" fill="none" stroke="#444" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#ah)"/>
+  <text x="754" y="282" font-size="16" fill="#5A6875">translated</text>
+
+  <!-- excerpt band -->
+  <g style="white-space:pre" font-family="Consolas, 'Courier New', monospace" font-size="16" fill="#15202A">
+    <text x="48" y="446"><tspan fill="#5A6875">in&#160;&#160;</tspan>&#160;&#160;The&#160;loss&#160;<tspan fill="#B8461F" font-weight="bold">&lt;math&gt;…&lt;/math&gt;</tspan>&#160;is&#160;<tspan fill="#1F5FBF">&lt;b&gt;</tspan>convex<tspan fill="#1F5FBF">&lt;/b&gt;</tspan>.</text>
+    <text x="48" y="472"><tspan fill="#5A6875">sent</tspan>&#160;&#160;The&#160;loss&#160;&#160;<tspan fill="#B8461F" font-weight="bold">__MATH_PLACEHOLDER_0__</tspan>&#160;&#160;is&#160;&#160;<tspan fill="#1F5FBF">__HTML_TAG_PLACEHOLDER_0__</tspan>&#160;convex&#160;<tspan fill="#1F5FBF">__HTML_TAG_PLACEHOLDER_1__</tspan>&#160;.</text>
+    <text x="48" y="498"><tspan fill="#5A6875">back</tspan>&#160;&#160;La&#160;perte&#160;<tspan fill="#B8461F" font-weight="bold">&lt;math&gt;…&lt;/math&gt;</tspan>&#160;est<tspan fill="#1F5FBF">&lt;b&gt;</tspan>convexe<tspan fill="#1F5FBF">&lt;/b&gt;</tspan>.</text>
+  </g>
+  <text x="1160" y="446" font-size="17" fill="#B8461F" text-anchor="end">the equation never reaches</text>
+  <text x="1160" y="468" font-size="17" fill="#B8461F" text-anchor="end">the translator</text>
+</svg>
